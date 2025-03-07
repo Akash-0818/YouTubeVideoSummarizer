@@ -9,7 +9,9 @@ import soundfile as sf
 import yt_dlp as youtube_dl
 from yt_dlp.utils import DownloadError
 
-os.environ['OPENAI_API_KEY'] = "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"
+with open('secret_key.txt','rb') as f:
+    data = f.read()
+os.environ['OPENAI_API_KEY'] = data
 
 
 app = Flask(__name__)

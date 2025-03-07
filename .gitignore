@@ -1,2 +1,4 @@
 env/*
 output/*
+secret_key.txt
+
