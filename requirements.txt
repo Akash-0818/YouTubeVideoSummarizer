@@ -1,0 +1,6 @@
+yt_dlp
+openai
+soundfile
+librosa
+flask
+ffmpeg-python
