@@ -9,8 +9,9 @@ import soundfile as sf
 import yt_dlp as youtube_dl
 from yt_dlp.utils import DownloadError
 
-with open('secret_key.txt','rb') as f:
+with open('secret_key.txt','r') as f:
     data = f.read()
+print(data)
 os.environ['OPENAI_API_KEY'] = data
 
 
