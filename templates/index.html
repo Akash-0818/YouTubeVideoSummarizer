@@ -86,7 +86,7 @@
         });
 
         
-        document.getElementById('btn').addEventListener('click', function() {
+            document.getElementById('btn').addEventListener('click', function() {
             console.log("inside second event listener");
             let url = document.getElementById('youtube-url').value.trim();
             console.log(url);
@@ -107,14 +107,31 @@
             .then(data => {
                 if (data.valid) {
                     clearInterval(interval);
-                    document.getElementById("output-textarea").textContent = data.summarytext; 
+                   // document.getElementById("output-textarea").textContent = data.summarytext;
+                   typeEffect(data.summarytext, 24); 
                 }
                 else {
                     document.getElementById("output-textarea").textContent = "Invalid response!!!";
                 }
 
             })
-        });
+        }); 
+
+
+        function typeEffect(text, speed) {
+            const textarea = document.getElementById("output-textarea");
+            textarea.textContent = ""; // Clear previous content
+            
+            let index = 0;
+            function typeNext() {
+                if (index < text.length) {
+                    textarea.textContent += text[index]; // Add one character at a time
+                    index++;
+                    setTimeout(typeNext, speed);
+                }
+            }
+            typeNext();
+        }
         
     </script>
 </body>
