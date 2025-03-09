@@ -11,19 +11,30 @@
         #textarea-container { 
             display: none; 
             margin-top: 20px; 
-            width: 100vw; 
+            /* margin-bottom: 1px; */
+            width: 100%; /* Adjusted to fit within the container */
+            height: auto;
+             /* padding: 0 10px; /* Added padding to prevent overflow */
+            box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+            border: 2px solid black;
+            border-radius: 5px;
         }
+
         #output-textarea { 
-            width: 100vw; 
-            height: calc(100vh - 300px); /* Adjusted to fit within the screen */
-            border: 1px solid #ccc; 
-            padding: 10px; 
+            width: 100%; /* Adjusted to fit within the container */
+            /*max-width: 600px; /* Added max-width to prevent excessive stretching */
+            /*height: calc(100vh - 300px);  */
+            height: 150px;
+            padding: 10px;
             resize: none; 
-            overflow-y: auto; /* Vertical scrolling only */
-            overflow-x: hidden; /* No horizontal scrolling */
-            white-space: pre-wrap; /* Ensures text wraps properly */
-            word-wrap: break-word; /* Prevents text from overflowing */
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            /* white-space: pre-wrap;  */
+            word-wrap: break-word; 
+            border: transparent;
+            /* box-sizing: border-box; /* Ensures padding doesn't cause overflow */
         }
+
         .input-group { max-width: 600px; margin: 0 auto; }
     </style>
 </head>
@@ -74,10 +85,19 @@
             document.getElementById('textarea-container').style.display = 'block';
         });
 
+        
         document.getElementById('btn').addEventListener('click', function() {
             console.log("inside second event listener");
             let url = document.getElementById('youtube-url').value.trim();
             console.log(url);
+
+            let dotcount = 1;
+            const interval = setInterval(() => {
+                dotcount = (dotcount)%3+1;
+                console.log(dotcount);
+                document.getElementById('output-textarea').placeholder = "Generating" + '.'.repeat(dotcount);
+            }, 1000);
+
             fetch('/generate_summary', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -86,14 +106,16 @@
             .then(response => response.json())
             .then(data => {
                 if (data.valid) {
-                    document.getElementById("textarea-container").textContent = data.summarytext; 
+                    clearInterval(interval);
+                    document.getElementById("output-textarea").textContent = data.summarytext; 
                 }
                 else {
-                    document.getElementById("textarea-container").textContent = "Invalid response!!!";
+                    document.getElementById("output-textarea").textContent = "Invalid response!!!";
                 }
 
             })
         });
+        
     </script>
 </body>
 </html>

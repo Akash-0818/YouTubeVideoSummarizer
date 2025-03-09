@@ -11,7 +11,6 @@ from yt_dlp.utils import DownloadError
 
 with open('secret_key.txt','r') as f:
     data = f.read()
-print(data)
 os.environ['OPENAI_API_KEY'] = data
 
 
